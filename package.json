@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/github4maninder/tinyapp#readme",
   "dependencies": {
+    "ejs": "^3.1.6",
     "express": "^4.17.1"
   }
 }
