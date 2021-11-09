@@ -15,6 +15,15 @@ app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
 
+app.get("/set", (req, res) => {
+  const a = 1;
+  res.send(`a = ${a}`);
+});
+ 
+app.get("/fetch", (req, res) => {
+  res.send(`a = ${a}`);
+});
+
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
