@@ -9,22 +9,10 @@
   <title>TinyApp</title>
 </head>
 
-<header>
-  <nav class="navbar navbar-expand-md navbar-dark bg-success">
-    <a class="navbar-brand" href="/urls">TinyApp</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
-      </div>
-    </div>
-  </nav>
-</header>
-
 <body>
+
+  <%- include ('./partials/_header') %> <!--head that stored in header.ejs--> 
+
   <main style="margin: 1em;">
     <h3>My URLs</h3>
     <table class="table">
@@ -32,13 +20,16 @@
         <tr>
           <th scope="col">Short URL</th>
           <th scope="col">Long URL</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
         <% for(let url in urls) { %>
           <tr>
             <td><%= url %></td>
-            <td><%= urls[url] %></td>
+
+            <td><a href="/urls/<%= url %>"><%= urls[url] %></a></td>
             <td>
               <form method="POST" action="urls/<%= url %>">
                 <button type="submit" class="btn btn-outline-primary">Edit</button>
@@ -51,6 +42,7 @@
             </td>
           </tr>
         <% } %>
+        
       </tbody>
     </table>
   </main>
