@@ -26,52 +26,42 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
+//READ a form to submit a new URL
 app.get("/urls/new", (req, res) => {
+  console.log('req.param', req.params);
   res.render("urls_new");
 });
 
+//EDIT create a new shortURL after form submission, saves to urlDataBase and redirect
+app.post("/urls", (req,res) => {
+  console.log('req.body',req.body);
+  let shortURL = generateRandomString();
+  urlDatabase[shortURL] = req.body.longURL; //shortURL-longURL key-value pair saved to urlDatabase
+  console.log(urlDatabase);
+  res.redirect(`/urls/${shortURL}`);
+});
+
+//READ a new shortURL link after form submission
 app.get("/urls/:shortURL", (req, res) => {
+  console.log('req.param', req.params);
   const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
   res.render("urls_show", templateVars);
 });
 
+// u/undefined
 app.get("/u/:shortURL", (req, res) => {
-  // const longURL = ...
+  console.log('req.param', req.params);
+  const longURL = urlDatabase[req.params.shortURL];
+  console.log('longURL: ', longURL);
   res.redirect(longURL);
 });
 
-app.get("/urls.json", (req, res) => {
-  res.json(urlDatabase);
-});
-
-app.get("/hello", (req, res) => {
-  res.send("<html><body>Hello <b>World</b></body></html>\n");
-});
-
-app.post("/urls", (req, res) => {
-  console.log(req.body);  // Log the POST request body to the console
-  res.send("Ok");         // Respond with 'Ok' (we will replace this)
-});
-
-app.post("/urls/:shortURL",(req,res) => {
-  const shortURLToEdit = req.params.shortURL;
-  res.redirect(`/urls/${shortURLToEdit}`);
-})
-
+//DELETE a single URL
 app.post("/urls/:shortURL/delete", (req,res) => {
   const shortURLToDel = req.params.shortURL;
-  delete urlDatabase[shortURLToDel];
+  delete urlDatabase[shortURLToDel]; // delete the property in urlDatabase obj
   res.redirect('/urls');
 })
-
-app.get("/set", (req, res) => {
-  const a = 1;
-  res.send(`a = ${a}`);
-});
- 
-app.get("/fetch", (req, res) => {
-  res.send(`a = ${a}`);
-});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
