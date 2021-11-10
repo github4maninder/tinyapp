@@ -6,7 +6,7 @@ const PORT = 8080; // default port 8080
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
 app.use(express.urlencoded({extended: true}));
-app.use(cookieParser())
+app.use(cookieParser());
 // View Engine
 app.set("view engine", "ejs"); //sets the template engine we are using as ejs
 
@@ -49,9 +49,9 @@ app.get("/urls/new", (req, res) => {
 //READ a new shortURL link after form submission
 app.get("/urls/:shortURL", (req, res) => {
   console.log('req.param', req.params);
-  const templateVars = { 
+  const templateVars = {
     username: req.cookies['username'],
-    shortURL: req.params.shortURL, 
+    shortURL: req.params.shortURL,
     longURL: urlDatabase[req.params.shortURL] };
   res.render("urls_show", templateVars);
   res.redirect("/urls");
@@ -66,8 +66,6 @@ app.post("/urls", (req,res) => {
   res.redirect(`/urls/${shortURL}`);
 });
 
-
-
 // EDIT login page
 app.post('/login', (req, res) => {
   const username = req.body.username;
@@ -81,12 +79,12 @@ app.post('/logout', (req, res) => {
   res.redirect('/urls');
 });
 
-// redirect after submit 
+// redirect after submit
 app.post("/urls/:shortURL", (req, res) => {
   const shortURL = req.params.shortURL;
   urlDatabase[shortURL] = req.body.longURL;
   res.redirect(shortURL);
-})
+});
 
 // u/undefined
 app.get("/u/:shortURL", (req, res) => {
@@ -101,7 +99,7 @@ app.post("/urls/:shortURL/delete", (req,res) => {
   const shortURLToDel = req.params.shortURL;
   delete urlDatabase[shortURLToDel]; // delete the property in urlDatabase obj
   res.redirect('/urls');
-})
+});
 
 app.listen(PORT, () => {
   console.log(`TinyApp server listening on port ${PORT}!`);
