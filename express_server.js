@@ -1,20 +1,27 @@
 const express = require("express");
 const app = express();
 const PORT = 8080; // default port 8080
-const bodyParser = require("body-parser");
 
+// MiddleWare
+const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser');
 app.use(express.urlencoded({extended: true}));
+app.use(cookieParser())
+// View Engine
 app.set("view engine", "ejs"); //sets the template engine we are using as ejs
 
+// functions
 const generateRandomString = () => { // returns a string of 6 alphanumeric random characters
   return Math.random().toString(36).substring(2,8);
 };
 
+// Database
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
 
+// Routes for rendering Pages
 // redirect to urls page
 app.get("/", (req, res) => {
   res.redirect(`/urls`);
@@ -63,12 +70,55 @@ app.get("/u/:shortURL", (req, res) => {
   res.redirect(longURL);
 });
 
+// register page
+app.get('/register', (req, res) => {
+  const { user_id } = req.session;
+  const user = usersDb[user_id];
+  let templateVars = {user};
+  res.render('urls_form', templateVars);
+});
+
+// login page
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  const userFound = getUserByEmail(email, usersDb);
+  const error = 'Error 403: Please check your email and password and try again';
+  if (userFound && checkPasswords(password, userFound)) {
+    req.session.user_id = userFound.id;
+    res.redirect('/urls');
+  } else {
+    res.send(error);
+  }
+});
+
 //DELETE a single URL
 app.post("/urls/:shortURL/delete", (req,res) => {
   const shortURLToDel = req.params.shortURL;
   delete urlDatabase[shortURLToDel]; // delete the property in urlDatabase obj
   res.redirect('/urls');
 })
+
+// Logout page
+app.post('/logout',(req, res) =>{
+  req.session.user_id = '';
+  res.redirect('/urls');
+})
+
+// register page
+app.post('/register', (req, res) => {
+  const id = generateRandomString();
+  const { email, password } = req.body;
+  const hashedPassword = bcrypt.hashSync(password, 10);
+  const user = getUserByEmail(email, usersDb);
+  const validRegistration = validateRegistration(email, password, user);
+  if (validRegistration) {
+    usersDb[id] = {id, email, hashedPassword};
+    req.session.user_id = id;
+    res.redirect('/urls');
+  } else {
+    res.send('Error 400: Please check the details you entered and try again!');
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`TinyApp server listening on port ${PORT}!`);
