@@ -32,10 +32,9 @@
       <main style="margin: 1em;">
         <h3> Edit </h3>
         <form class="form-inline" action="/urls" method="POST">
-          <div class="form-group mb-2">
-            <label for = "longURL">Enter a URL:</label>
-            <input class="form-control" type="text" name="longURL" placeholder="http://" style="width: 300px; margin: 1em;">
-            <button type="submit" > Submit </button>
+            <label for = "longURL" style="margin: 0.5em; margin-left: 60vh;">Enter a URL:</label>
+            <input class="form-control" type="text" name="longURL" placeholder="<%= longURL %>" style="margin: 0.5em;">
+            <button type="submit" class="btn btn-primary"> Submit </button>
           </div>
         </form>
       </main>

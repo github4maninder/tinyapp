@@ -40,12 +40,12 @@
             <td><%= url %></td>
             <td><%= urls[url] %></td>
             <td>
-              <form method="GET" action="urls/9sm5xK">
+              <form method="POST" action="urls/<%= url %>">
                 <button type="submit" class="btn btn-outline-primary">Edit</button>
               </form>
             </td>
             <td>
-              <form method="POST" action="/urls/9sm5xK/delete">
+              <form method="POST" action="/urls/<%= url %>/delete">
                 <button type="submit" class="btn btn-outline-danger">Delete</button>
               </form>
             </td>
