@@ -64,5 +64,5 @@ app.post("/urls/:shortURL/delete", (req,res) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
+  console.log(`Tiny app listening on port ${PORT}!`);
 });
