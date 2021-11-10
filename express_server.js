@@ -3,7 +3,7 @@ const app = express();
 const PORT = 8080; // default port 8080
 const bodyParser = require("body-parser");
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}));
 app.set("view engine", "ejs"); //sets the template engine we are using as ejs
 
 const generateRandomString = () => { // returns a string of 6 alphanumeric random characters
@@ -15,11 +15,12 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+// redirect to urls page
 app.get("/", (req, res) => {
   res.redirect(`/urls`);
 });
 
-//READ urls
+//READ for all urls
 app.get("/urls", (req, res) => {
   console.log('req.param', req.params);
   const templateVars = { urls: urlDatabase };
@@ -48,6 +49,12 @@ app.get("/urls/:shortURL", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
+// redirect after submit 
+app.post("/urls/:shortURL", (req, res) => {
+  const shortURL = req.params.shortURL;
+  res.redirect(shortURL);
+})
+
 // u/undefined
 app.get("/u/:shortURL", (req, res) => {
   console.log('req.param', req.params);
@@ -64,5 +71,5 @@ app.post("/urls/:shortURL/delete", (req,res) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`Tiny app listening on port ${PORT}!`);
+  console.log(`TinyApp server listening on port ${PORT}!`);
 });
