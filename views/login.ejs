@@ -2,37 +2,34 @@
 <html lang="en">
 
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>URL - TinyApp Example</title>
+  <title>TinyApp</title>
 </head>
 
 <body>
   <%- include('partials/_header') %>
-    <div class="card text-center">
-      <div class="card-header"></div>
-      <div class="card-body">
-        <h4 class="card-title">TinyURL for: <%= longURL %>
-        </h4>
-        <p class="card-text">Short URL: <a href="/u/<%= shortURL %>">
-            <%= shortURL %>
-          </a></p>
-      </div>
-      <div class="card-footer text-muted"></div>
-    </div>
-    <div class="card text-center">
-      <div class="card-body">
-        <!-- edit form -->
-        <form method="POST" action="/urls/<%= shortURL %>">
-          <h4 style="color: #999" class="card-title">Edit</h4>
-          <input class="" type="text" name="longURL" value="<%= longURL %> " style="width: 300px; margin: 1em"><button
-            type="submit">Submit</button>
-        </form>
+    <main style="margin:1em">
+      <h2>Login</h2>
+      <form action="/login" method="POST">
+        <!-- email -->
+        <div>
+          <label for="email">Enter your email: </label>
+          <input type="email" name="email" id="email">
+        </div>
+        <!-- password -->
+        <div>
+          <label for="password">Enter your password</label>
+          <input type="password" name="password" id="password">
+        </div>
+        <button class="btn btn-outline-primary" type="submit">Login</button>
+      </form>
 
-      </div>
-      <div class="card-footer text-muted"></div>
-    </div>
+    </main>
+
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
