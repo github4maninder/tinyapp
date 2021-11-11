@@ -12,9 +12,13 @@
 
 <body>
   <%- include('partials/_header') %>
+
     <main style="margin:1em">
+      <% if (user) { %>
       <h3>MY URLS</h3>
+
       <table class="table">
+        <!--Table for headers-->
         <thead>
           <tr>
             <th scope="col">Short URL</th>
@@ -23,14 +27,16 @@
             <th scope="col">Delete</th>
           </tr>
         </thead>
+
+        <!-- Table for body --- related to info and URLs--->
         <tbody>
           <% for (let id in urls) { %>
             <tr>
               <td>
-                <%= urls[id] %>
+                <%= id %>
               </td>
               <td>
-                <%= id %>
+                <%= urls[id] %>
               </td>
               <td>
                 <a href="/urls/<%= id %> " class="btn btn-outline-primary btn-sm">Edit</a>
@@ -43,6 +49,10 @@
             <% } %>
         </tbody>
       </table>
+
+      <% } else { %>
+        <h4>Please <a href="/login">login</a> to see your URLs!</h4>
+        <% } %>
     </main>
 
     <!-- Bootstrap JS -->
