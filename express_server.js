@@ -1,17 +1,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-//const cookieParser = require('cookie-parser');
-const morgan = require('morgan');
 const cookieSession = require("cookie-session");
 const bcrypt = require('bcryptjs');
-
+const saltRounds = 10;
+//const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
+const app = express();
 //PORT
 const PORT = 8080; // default port 8080
 
 // MiddleWare
-const app = express();
+
 app.use(express.urlencoded({extended: true}));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use(morgan('dev'));
 app.use(cookieSession({
