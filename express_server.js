@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 
 //PORT
 const PORT = 8080; // default port 8080
@@ -10,6 +11,7 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.set("view engine", "ejs");
+app.use(morgan('dev'));
 
 // functions
 const generateRandomString = () => { // returns a string of 6 alphanumeric random characters
