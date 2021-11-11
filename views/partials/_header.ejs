@@ -1,5 +1,7 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-success d-flex justify-content-between flex-row">
+    
+    <!---left side nav-->
     <div class="d-flex flex-row">
       <a class="navbar-brand" href="/urls">TinyApp</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -13,6 +15,8 @@
         </div>
       </div>
     </div>
+
+    <!--- right side buttons-->
     <div class="nav navbar-nav float-md-right">
       <% if (user) { %>
         <form class="form-inline" method="POST" action="/logout">
@@ -22,12 +26,10 @@
           </div>
         </form>
         <% } else { %>
-          <!-- <form class="form-inline" method="POST" action="/login">
-            <input class="mr-sm-2" type="text" name="username"> -->
           <a href="/login" class="btn btn btn-outline-dark">Login</a>
-          <!-- </form> -->
           <a style="margin-left: 0.5em;" class="btn btn-outline-dark" href="/register">Register</a>
           <% } %>
     </div>
+    
   </nav>
 </header>
