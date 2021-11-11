@@ -8,7 +8,7 @@ const PORT = 8080; // default port 8080
 
 // MiddleWare
 const app = express();
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use(morgan('dev'));
