@@ -124,23 +124,26 @@ app.post("/urls", (req, res) => {
 // render login page info
 app.get("/login", (req, res) => {
   // console.log("req.body: ", req.body);
-  const templateVars = { user: users[req.cookies.user_id] };
+  if(req.session.user_id) {
+    return res.redirect("/urls");
+  }
+  const templateVars = { user: users[req.session.user_id] };
   res.render("login", templateVars);
 });
 
 app.post("/login", (req, res) => {
-  console.log("req.body: ", req.body);
-  const user_id = lookUpEmail(req.body.email);
-  console.log("user_id: ", user_id);
-  if (!user_id) {
+  // console.log("req.body: ", req.body);
+  const userId = lookUpEmail(req.body.email, users);
+  // console.log("user_id: ", user_id);
+  if (!userId) {
     res.statusCode = 403;
-    res.end("Error: User does not exist");
-  } else if (users[user_id].password !== req.body.password) {
+    res.send("<html><h1>Error: User does not exist</h1></html>");
+  } else if (!bcrypt.compareSync(req.body.password, users[userId].password)) {
     res.statusCode = 403;
-    res.send("Error: incorrect password");
+    return res.send("<html><h1>Error: incorrect password</h1></html>");
   } else {
-    console.log(users);
-    res.cookie("user_id", user_id);
+    // console.log(users);
+    res.session["user_id"] = userId;
     res.redirect("/urls");
   }
 });
