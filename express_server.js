@@ -6,6 +6,7 @@ const saltRounds = 10;
 //const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const app = express();
+const { generateRandomString, getUserByEmail , urlsForUser } = require('./helpers');
 
 //PORT
 const PORT = 8080; // default port 8080
@@ -20,30 +21,6 @@ app.use(express.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(morgan('dev'));
 
-// functions
-const generateRandomString = () => { // returns a string of 6 alphanumeric random characters
-  return Math.random().toString(36).substring(2,8);
-};
-
-function getUserByEmail (email, database) {
-  for (let id in database) {
-    console.log("users[id].email: ", database[id].email);
-    if (database[id].email === email) {
-      return id;
-    }
-  }
-  return null;
-}
-
-const urlsForUser = function(id, urlDatabase) {
-  const output = {};
-  for (let urlID in urlDatabase) {
-    if (urlDatabase[urlID].userID === id){
-      output[urlID] = urlDatabase[urlID].longURL;
-    }
-  }
-  return output;
-}
 
 // Database
 const urlDatabase = {
@@ -54,7 +31,7 @@ const urlDatabase = {
 };
 
 const users = {
-  "aJ48lW": {
+  "aJ48l": {
     id: "aJ48lW",
     email: "user@example.com",
     password: bcrypt.hashSync("123", saltRounds)
