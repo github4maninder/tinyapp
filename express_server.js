@@ -1,3 +1,9 @@
+//==================================
+//        Project - TinyApp
+//        Author  - Maninder Sidhu
+//        MAJOR RELEASE 1.0
+//         11th NOVEMBER 2021 
+//=================================
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
@@ -55,6 +61,8 @@ const users = {
   }
 };
 
+//                      GET Requests
+//===========================================================
 // redirects to /urls if logged in, or /login if not logged in
 app.get("/", (req, res) => {
   if (req.session.user_id) {
@@ -103,6 +111,9 @@ app.get("/u/:id", (req, res) => {
   }
 });
 
+//                          POST REQUESTS
+//==================================================================================
+
 //generates a new shortURL, adds it to the database, and redirects to the "show" page
 app.post("/urls", (req, res) => {
   if (!req.session.user_id) {
@@ -137,6 +148,8 @@ app.post("/urls/:id/delete", (req, res) => {
   return res.send("<html><h1>Error: you do not have permission to delete this URL</h1></html>");
 });
 
+//                       LOGIN AND REGISTER REQUESTS
+//=================================================================
 
 app.get("/login", (req, res) => {
   if (req.session.user_id) {
@@ -199,3 +212,7 @@ app.post("/logout", (req, res) => {
 app.listen(PORT, () => {
   console.log(`TinyApp server listening on port ${PORT}!`);
 });
+
+// ---------------------------------------------------------------
+//                             -  MAJOR RELEASE 1.0 -
+//=================================================================

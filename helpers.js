@@ -1,3 +1,5 @@
+//          Functions
+
 const generateRandomString = () => { // returns a string of 6 alphanumeric random characters
   return Math.random().toString(36).substring(2,8);
 };
