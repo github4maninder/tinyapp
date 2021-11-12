@@ -63,23 +63,26 @@ const users = {
 };
 
 //redirects to the actual page when user clicks on short url link
-app.get("/u/:shortURL", (req, res) => {
+app.get("/u/:id", (req, res) => {
   // console.log("req.params.shortURL", req.params.shortURL);
   // console.log("urlDatabase: ", urlDatabase);
-  const longURL = urlDatabase[req.params.shortURL];
+  const urlID = urlDatabase[req.params.id];
   // console.log("longUrl: ", longURL);
-  if (longURL === undefined) {
+  if (urlID === undefined) {
     res.statusCode = 404;
-    res.end("Error: shortURL does not exist");
+    return res.send("<html><h1>Error: shortURL does not exist</h1><html>");
   } else {
-    res.redirect(longURL);
+    res.redirect(urlID.longURL);
   }
 });
 
 //get and post together
 //renders new URL page
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new", { user: users[req.cookies.user_id] });
+  if (req.session.user_id) {
+    res.render("urls_new", { user: users[req.session.user_id] });
+  }
+  return res.redirect('/login');
 });
 
 //updates an existing url in the database, and redirects back to URLs page
@@ -92,9 +95,13 @@ app.post("/urls/:id", (req, res) => {
 });
 
 // removes a URL resource and redirects back to URLs page
-app.post("/urls/:shortURL/delete", (req, res) => {
-  delete urlDatabase[req.params.shortURL];
-  res.redirect("/urls");
+app.post("/urls/:id/delete", (req, res) => {
+  console.log('req.session', req.session);
+  if (req.session.user_id && req.session.user_id === urlDatabase[req.params.id].userID) {
+    delete urlDatabase[req.params.id];
+    return res.redirect("/urls");
+  }
+  return res.send("<html><h1> Error: you don't have permission to delete the URL. </h1></html>");
 });
 
 //renders individual page for a URL
@@ -124,7 +131,7 @@ app.post("/urls", (req, res) => {
 // render login page info
 app.get("/login", (req, res) => {
   // console.log("req.body: ", req.body);
-  if(req.session.user_id) {
+  if (req.session.user_id) {
     return res.redirect("/urls");
   }
   const templateVars = { user: users[req.session.user_id] };
@@ -150,30 +157,31 @@ app.post("/login", (req, res) => {
 
 //renders register page
 app.get("/register", (req, res) => {
-  const templateVars = { user: users[req.cookies.user_id] };
-  res.render("register", templateVars);
+  if (req.session.user_id) {
+    return res.redirect('/urls');
+  }
+  const templateVars = { user: users[req.session.user_id] };
+  return res.render("register", templateVars);
 });
 
 app.post("/register", (req, res) => {
   if (req.body.email === "" || req.body.password === "") {
     res.statusCode = 400;
-    res.end("Please enter an email and password");
-  } else if (users[lookUpEmail(req.body.email)]) {
+    return res.send("<html><h1>Please enter an email and password</h1></html>");
+  } else if (users[lookUpEmail(req.body.email, users)]) {
     res.statusCode = 400;
-    res.end("Email already exists");
+    res.send("<html><h1>Email already exists</h1></html>");
   } else {
     const id = generateRandomString();
     users[id] = {
       id,
       email: req.body.email,
-      password: req.body.password
+      password: bcrypt.hashSync(req.body.password, saltRounds)
     };
-    res.cookie("user_id", id);
+    res.session["user_id"] = id;
     // console.log("users: ", users);
-    res.redirect("/urls");
+    return res.redirect("/urls");
   }
-
-  console.log(users);
 });
 
 app.post("/logout", (req, res) => {
@@ -183,7 +191,6 @@ app.post("/logout", (req, res) => {
 
 
 // LISTENER
-
 app.listen(PORT, () => {
   console.log(`TinyApp server listening on port ${PORT}!`);
 });
