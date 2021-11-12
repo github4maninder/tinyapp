@@ -17,11 +17,16 @@ TinyApp is a full stack web application built with Node and Express that allows 
 - Node.js
 - Express
 - EJS
-- bcrypt
+- bcryptjs
 - morgan
 - body-parser
 - cookie-session
 - PORT = 8080
+
+## devDependencies
+- chai
+- mocha
+- nodemon
 
 ## Getting Started
 
