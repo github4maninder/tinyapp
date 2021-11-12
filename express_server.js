@@ -6,19 +6,19 @@ const saltRounds = 10;
 //const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const app = express();
+
 //PORT
 const PORT = 8080; // default port 8080
 
 // MiddleWare
-
-app.use(express.urlencoded({extended: true}));
-// app.use(cookieParser());
-app.set("view engine", "ejs");
-app.use(morgan('dev'));
 app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2']
 }));
+app.use(express.urlencoded({extended: true}));
+// app.use(cookieParser());
+app.set("view engine", "ejs");
+app.use(morgan('dev'));
 
 // functions
 const generateRandomString = () => { // returns a string of 6 alphanumeric random characters
@@ -38,20 +38,27 @@ function lookUpEmail(email) {
 
 // Database
 const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  "b2xVn2": {longURL: "http://www.lighthouselabs.ca", userID: "jmb0jt"},
+  "9sm5xK": {longURL: "http://www.google.com", userID: "mtlswd"},
+  "b6UTxQ": { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
+  "i3BoGr": { longURL: "https://www.sky.net",userID: "aJ48lW"}
 };
 
 const users = {
-  "userRandomID": {
-    id: "userRandomID",
+  "jmb0jt": {
+    id: "jmb0jt",
     email: "user@example.com",
-    password: "purple-monkey-dinosaur"
+    password: bcrypt.hashSync("purple-monkey-dinosaur", saltRounds)
   },
-  "user2RandomID": {
-    id: "user2RandomID",
+  "aJ48lW": {
+    id: "aJ48lW",
     email: "user2@example.com",
-    password: "dishwasher-funk"
+    password: bcrypt.hashSync("dishwasher-funk", saltRounds)
+  },
+  "mtlswd": {
+    id: "mtlswd",
+    email: "user3@example.com",
+    password: bcrypt.hashSync("blue-water", saltRounds)
   }
 };
 
