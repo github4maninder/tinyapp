@@ -24,25 +24,28 @@ app.use(morgan('dev'));
 
 // Database
 const urlDatabase = {
-  "b2xVn2": {longURL: "http://www.lighthouselabs.ca", userID: "aJ48lW"},
-  "9sm5xK": {longURL: "http://www.google.com", userID: "aJ48lW"},
+  "b2xVn2": { longURL: "http://www.lighthouselabs.ca", userID: "aJ48lW"},
+  "9sm5xK": { longURL: "http://www.google.com", userID: "aJ48lW"},
   "b6UTxQ": { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
-  "i3BoGr": { longURL: "https://ca.yahoo.com/",userID: "jmb0jt"}
+  "i3BoGr": { longURL: "https://ca.yahoo.com/", userID: "aJ48lW"},
+  "kyekdy": { longURL: "https://www.freecodecamp.org", userID: "jmB0jt"},
+  "ndjsde": { longURL: "https://nodejs.dev", userID: "jmB0jt"},
+  "jsBest": { longURL: "https://www.javascript.com", userID: "mtswd2"}
 };
 
 const users = {
-  "aJ48l": {
-    id: "aJ48lW",
-    email: "user@example.com",
-    password: bcrypt.hashSync("123", saltRounds)
-  },
   "aJ48lW": {
     id: "aJ48lW",
-    email: "user2@example.com",
-    password: bcrypt.hashSync("123", saltRounds)
+    email: "user@example.com",
+    password: bcrypt.hashSync("purple-monkey-dinosaur", saltRounds)
   },
-  "jmb0jt": {
-    id: "mtlswd",
+  "jmB0jt": {
+    id: "jmB0jt",
+    email: "user2@example.com",
+    password: bcrypt.hashSync("dishwasher-funk", saltRounds)
+  },
+  "mtswd2": {
+    id: "mtswd2",
     email: "user3@example.com",
     password: bcrypt.hashSync("123", saltRounds)
   }
