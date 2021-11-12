@@ -105,9 +105,16 @@ app.post("/urls/:id/delete", (req, res) => {
 });
 
 //renders individual page for a URL
-app.get("/urls/:shortURL", (req, res) => {
-  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], user: users[req.cookies.user_id] };
-  res.render("urls_show", templateVars);
+app.get("/urls/:id", (req, res) => {
+  if (!urlDatabase[req.params.id]) {
+    return res.send('<html> <h1> Error: this URL do not exist</h1></html>');
+  } else if (!req.session.user_id){
+    return res.send('<html><h1>Error: please login to view the page </h1></html>');
+  } else if (req.session.user_id !== urlDatabase[req.params.id].userID) {
+    return res.send('<html><h1>Error: you do not have permission to view this URL</h1></html>');
+  }
+  const templateVars = { shortURL: req.params.id, longURL: urlDatabase[req.params.id].longURL, user: users[req.session.user_id] };
+  res.render('urls_show', templateVars);
 });
 
 //renders URLs page with list of all the URLs currently in the database
