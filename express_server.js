@@ -29,6 +29,10 @@ const urlDatabase = {
   "b6UTxQ": { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
   "i3BoGr": { longURL: "https://ca.yahoo.com/", userID: "aJ48lW"},
   "kyekdy": { longURL: "https://www.freecodecamp.org", userID: "jmB0jt"},
+  "b2xVw2": { longURL: "http://www.lighthouselabs.ca", userID: "jmB0jt"},
+  "9sm5sK": { longURL: "http://www.google.com", userID: "jmB0jt"},
+  "b6UTeQ": { longURL: "https://www.tsn.ca", userID: "jmB0jt" },
+  "i3BqGr": { longURL: "https://ca.yahoo.com/", userID: "jmB0jt"},
   "ndjsde": { longURL: "https://nodejs.dev", userID: "jmB0jt"},
   "jsBest": { longURL: "https://www.javascript.com", userID: "mtswd2"}
 };
