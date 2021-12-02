@@ -208,6 +208,11 @@ app.post("/logout", (req, res) => {
   res.redirect("/urls");
 });
 
+//Debug
+app.get("/urls.json", (req, res) => {
+  res.json(urlDatabase);
+});
+
 // LISTENER
 app.listen(PORT, () => {
   console.log(`TinyApp server listening on port ${PORT}!`);
